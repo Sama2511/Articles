@@ -1,9 +1,19 @@
 import Image from "next/image";
 import SearchFrom from "../../components/ui/SearchForm";
-
+import StartupCard from "../../components/ui/StartupCard";
 export default async function Home({searchParams}: {searchParams: Promise<{query?: string}>}) {
 
     const query = (await searchParams).query;
+    const posts = [{
+      _createdAt: new Date(),
+      views: 55,
+      author: {_id:1, name:"Oussama"},
+      _id: 1,
+      description:"This is a description",
+      image: "https://images.unsplash.com/photo-1527430253228-e93688616381?q=80&w=1034&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      category: "Robots",
+      title:"We Robots",
+    }]
   return (
     <>
       <section className="w-full bg-[#ef2a69] min-h-[530px] pattern flex justify-center items-center flex-col py-10 px-6;">
@@ -20,9 +30,14 @@ export default async function Home({searchParams}: {searchParams: Promise<{query
         </p>
       </section>
       <ul className="mt-7 grid md:grid-cols-3 sm:grid-cols-2 gap-5">
-
-      </ul>
-
+        {posts?.length > 0 ? (
+            posts.map((post: StartupTypeCard) => (
+              <StartupCard key={post?._id} post={post} />
+            ))
+          ) : (
+            <p className="text-black-100 text-sm font-normal">No startups found</p>
+          )}
+        </ul>
     </>
   )
 }
